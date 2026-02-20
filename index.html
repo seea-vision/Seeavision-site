@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SeeAVision™ — Cultural Technology</title>
-  <meta name="description" content="SeeAVision™ builds cultural technology tools that help people learn, create, and consume culture consciously." />
+  <title>AlchemyScore™ — The Nutrition Label for Music</title>
+  <meta name="description" content="AlchemyScore™ is a nutrition label for lyrics: what to take in, what to discard, and how to apply the message." />
 
   <style>
     :root{
@@ -20,7 +20,6 @@
       --muted:rgba(255,255,255,.70);
       --muted2:rgba(255,255,255,.56);
 
-      /* Universal futurism (no city) */
       --azure:#52e6ff;
       --violet:#b072ff;
       --sun:#ffd36b;
@@ -49,7 +48,7 @@
       overflow-x:hidden;
     }
 
-    /* Ambient depth lines (not a city) */
+    /* ambient depth lines */
     .depthLines{
       position:fixed; inset:-30vh -20vw;
       pointer-events:none;
@@ -70,7 +69,7 @@
       100%{transform: perspective(900px) rotateX(62deg) translate3d(14px,-132px,0)}
     }
 
-    /* Floating aurora orbs */
+    /* aurora orbs */
     .orb{
       position:fixed; border-radius:999px;
       filter: blur(22px);
@@ -88,7 +87,7 @@
     a{color:inherit}
     .wrap{max-width:1120px;margin:0 auto;padding:22px 16px 70px; position:relative; z-index:2}
 
-    /* Top bar */
+    /* topbar */
     .topbar{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px;
@@ -126,7 +125,7 @@
       color:var(--muted);
       white-space:nowrap;
     }
-    .actions{display:flex; gap:10px; align-items:center}
+    .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       padding:10px 12px;
@@ -146,16 +145,7 @@
       box-shadow: 0 0 28px rgba(82,230,255,.12);
     }
 
-    /* Hero */
-    .hero{padding:36px 6px 16px}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    @media (max-width:900px){ .heroGrid{grid-template-columns:1fr} }
-
+    /* panels */
     .panel{
       border:1px solid var(--line);
       background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
@@ -190,20 +180,30 @@
       box-shadow: 0 0 18px rgba(82,230,255,.35);
     }
 
+    /* HERO */
+    .hero{padding:34px 6px 10px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){ .heroGrid{grid-template-columns:1fr} }
+
     .headline{
       margin:12px 0 10px;
-      font-size:46px;
-      line-height:1.03;
+      font-size:52px;
+      line-height:1.02;
       letter-spacing:-.02em;
     }
-    @media (max-width:420px){ .headline{font-size:36px} }
+    @media (max-width:420px){ .headline{font-size:38px} }
 
     .sub{
       margin:0;
       color:var(--muted);
       font-size:16px;
-      line-height:1.6;
-      max-width:64ch;
+      line-height:1.65;
+      max-width:68ch;
     }
 
     .heroCtas{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
@@ -221,15 +221,16 @@
       font-family:var(--mono);
     }
 
-    /* Right panel: Modules */
-    .modulesHeader{
+    /* Right: “What you get” */
+    .rightHeader{
       display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
       margin-bottom:12px;
     }
-    .modulesHeader h3{margin:0; font-size:16px; letter-spacing:.16em; text-transform:uppercase}
-    .modulesHeader p{margin:0; color:var(--muted); font-size:13px; line-height:1.5; max-width:34ch}
-    .moduleList{display:grid; gap:10px}
-    .module{
+    .rightHeader h3{margin:0; font-size:16px; letter-spacing:.16em; text-transform:uppercase}
+    .rightHeader p{margin:0; color:var(--muted); font-size:13px; line-height:1.5; max-width:34ch}
+
+    .stack{display:grid; gap:10px}
+    .item{
       display:flex; gap:12px; align-items:flex-start;
       padding:12px 12px;
       border-radius:18px;
@@ -243,10 +244,10 @@
       background:rgba(255,255,255,.05);
       font-size:16px;
     }
-    .module h4{margin:0; font-size:14px}
-    .module p{margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.45}
+    .item h4{margin:0; font-size:14px}
+    .item p{margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.45}
 
-    /* Sections */
+    /* Section headings */
     .sectionTitle{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       margin:22px 6px 10px;
@@ -259,7 +260,7 @@
       background:linear-gradient(90deg, rgba(255,255,255,.14), transparent);
     }
 
-    /* Project cards */
+    /* 3-column cards */
     .cards{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -301,42 +302,57 @@
     .bullets{margin:12px 0 0; padding-left:18px; color:var(--muted2); font-size:13px}
     .bullets li{margin:6px 0}
 
-    /* Funding */
-    .funding{padding:0 6px}
-    .fundGrid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
-    @media (max-width:900px){ .fundGrid{grid-template-columns:1fr} }
-    .table{
-      width:100%;
-      border-collapse:collapse;
-      overflow:hidden;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-    }
-    .table th,.table td{
-      padding:12px 12px;
-      text-align:left;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      font-size:13px;
-      color:rgba(255,255,255,.86);
-    }
-    .table th{
-      font-family:var(--mono);
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.78);
-      background:rgba(255,255,255,.04);
-    }
-    .table td:last-child{color:var(--muted)}
-    .foot{
+    /* Demo callout */
+    .callout{
+      margin:14px 6px 0;
       display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
-      padding:18px 6px 0;
-      color:var(--muted2);
-      font-size:13px;
+      border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(90deg, rgba(82,230,255,.10), rgba(176,114,255,.08));
+      border-radius:22px;
+      padding:14px 14px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(14px);
     }
-    .foot a{color:rgba(82,230,255,.92); text-decoration:none}
-    .foot a:hover{text-decoration:underline}
+    .callout strong{letter-spacing:.02em}
+    .callout span{color:var(--muted)}
+    .calloutLeft{display:flex; flex-direction:column; gap:4px}
 
+    /* Pricing */
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      padding:0 6px;
+    }
+    @media (max-width:900px){ .pricing{grid-template-columns:1fr} }
+    .price{
+      border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:var(--radius);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(16px);
+      overflow:hidden;
+      position:relative;
+    }
+    .price::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background:
+        radial-gradient(560px 170px at 18% -10%, rgba(60,255,176,.13), transparent 55%),
+        radial-gradient(560px 180px at 100% 0%, rgba(255,211,107,.10), transparent 60%);
+      opacity:.95; pointer-events:none;
+    }
+    .priceInner{position:relative; padding:18px}
+    .price h3{margin:6px 0 0; font-size:18px}
+    .big{
+      margin:10px 0 6px;
+      font-size:34px;
+      letter-spacing:-.02em;
+    }
+    .small{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    .divider{height:1px;background:rgba(255,255,255,.12); margin:14px 0}
+
+    /* Footer */
     footer{
       margin-top:26px;
       padding:20px 6px 0;
@@ -349,7 +365,6 @@
 
 <body>
   <div class="depthLines"></div>
-
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
@@ -361,85 +376,89 @@
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <div style="min-width:0">
-          <h1>SeeAVision™</h1>
-          <div class="pill">Cultural Movement • Future-Ready • Conscious Media</div>
+          <h1>AlchemyScore™</h1>
+          <div class="pill">The Nutrition Label for Music</div>
         </div>
       </div>
 
       <div class="actions">
-        <a class="btn" href="#projects">Projects</a>
-        <a class="btn" href="#funding">Funding</a>
-        <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Live Demo →</a>
+        <a class="btn" href="#how">How it works</a>
+        <a class="btn" href="#features">Features</a>
+        <a class="btn" href="#pricing">Pricing</a>
+        <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
       </div>
     </div>
 
+    <!-- HERO -->
     <section class="hero">
       <div class="heroGrid">
 
         <div class="panel">
           <div class="panelInner">
-            <div class="kicker"><span class="sig"></span>Welcome to SeeAVision™</div>
-            <h2 class="headline">Build culture consciously.</h2>
+            <div class="kicker"><span class="sig"></span>AlchemyScore™ by SeeAVision</div>
+            <h2 class="headline">Stop consuming lyrics blind.</h2>
             <p class="sub">
-              SeeAVision™ is cultural technology dedicated to creating tools that help people learn, create, and consume culture consciously.
-              Our mission: protect the mind, uplift creativity, and evolve how society engages with media and education.
+              <b>AlchemyScore™</b> breaks down music like a nutrition label—so you know what you’re feeding your mind.
+              Every analysis shows: <b>what to take in</b>, <b>what to discard</b>, and <b>how to apply the message</b>.
+              <br/><br/>
+              Not censorship. <b>Context.</b>
             </p>
 
             <div class="heroCtas">
-              <a class="btn primary" href="#funding">Partner / Invest</a>
-              <a class="btn" href="#projects">Explore Projects</a>
-              <a class="btn" href="mailto:contact@seeavision.net">contact@seeavision.net</a>
+              <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
+              <a class="btn" href="#pricing">Get Beta Access</a>
+              <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Partnership">Partnerships</a>
             </div>
 
             <div class="mini">
-              <span>Context ≠ Censorship</span>
-              <span>Culture Intelligence</span>
-              <span>Creator Empowerment</span>
-              <span>Youth + Education Ready</span>
+              <span>Listeners</span>
+              <span>Artists</span>
+              <span>Parents</span>
+              <span>Educators</span>
             </div>
           </div>
         </div>
 
         <div class="panel">
           <div class="panelInner">
-            <div class="modulesHeader">
+            <div class="rightHeader">
               <div>
-                <h3>Ecosystem</h3>
-                <p>Tools that translate media into usable insight—so the next generation builds forward.</p>
+                <h3>What you get</h3>
+                <p>Clear outputs that make music actionable—without killing creativity.</p>
               </div>
-              <div class="pill">v0.9 Demo</div>
+              <div class="pill">Live demo available</div>
             </div>
 
-            <div class="moduleList">
-              <div class="module">
-                <div class="icon">🎶</div>
+            <div class="stack">
+              <div class="item">
+                <div class="icon">✅</div>
                 <div>
-                  <h4>AlchemyScore™</h4>
-                  <p>A “nutrition label” for music: what to take in, what to discard, and how to apply the message.</p>
+                  <h4>Use</h4>
+                  <p>What to digest positively from the message.</p>
                 </div>
               </div>
 
-              <div class="module">
+              <div class="item">
+                <div class="icon">⚠️</div>
+                <div>
+                  <h4>Avoid</h4>
+                  <p>What to discard if it’s harmful, disempowering, or misaligned.</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="icon">🧭</div>
+                <div>
+                  <h4>Strategy</h4>
+                  <p>How to apply the message for growth—listener or creator.</p>
+                </div>
+              </div>
+
+              <div class="item">
                 <div class="icon">🧠</div>
                 <div>
                   <h4>RECODE Mode</h4>
-                  <p>Upgrades harmful logic while preserving cadence—remixer or serious mindset upgrader.</p>
-                </div>
-              </div>
-
-              <div class="module">
-                <div class="icon">🎮</div>
-                <div>
-                  <h4>Team Builder Game</h4>
-                  <p>Educational match game teaching teamwork, entrepreneurship, and building profitable companies.</p>
-                </div>
-              </div>
-
-              <div class="module">
-                <div class="icon">🎤</div>
-                <div>
-                  <h4>FlowState</h4>
-                  <p>Transforms raw freestyles into cohesive songs by analyzing flows, patterns, and hooks.</p>
+                  <p>Rewrite harmful logic in similar cadence—upgrade the code without losing the rhythm.</p>
                 </div>
               </div>
             </div>
@@ -448,27 +467,39 @@
         </div>
 
       </div>
+
+      <div class="callout">
+        <div class="calloutLeft">
+          <strong>Demo note:</strong>
+          <span>Render demo may load slowly. The production build will be faster + secured.</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn" href="#funding">Investor info</a>
+          <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Open Demo →</a>
+        </div>
+      </div>
     </section>
 
-    <div class="sectionTitle" id="projects">
-      <h2>Projects</h2><div class="line"></div>
+    <!-- HOW IT WORKS -->
+    <div class="sectionTitle" id="how">
+      <h2>How it works</h2><div class="line"></div>
     </div>
 
     <section class="cards">
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">AlchemyScore™</span>
-            <span class="tag">Music Intelligence</span>
+            <span class="tag">Step 1</span>
+            <span class="tag">Input</span>
           </div>
-          <h3>The Nutrition Label for Lyrics</h3>
+          <h3>Paste lyrics or choose an artist</h3>
           <p>
-            Breaks down songs like a label: clarifies emotional and behavioral impact, adds context, and guides safe digestion.
+            Analyze a song, an artist, or your own unreleased lyrics. The system extracts themes, intent, and behavioral signals.
           </p>
           <ul class="bullets">
-            <li>9-category scoring system</li>
-            <li>Lyric Upload + Compare Mode</li>
-            <li>Use / Avoid / Strategy output</li>
+            <li>Lyric upload mode (creator-friendly)</li>
+            <li>Song + artist analysis paths</li>
+            <li>Compare mode support</li>
           </ul>
         </div>
       </article>
@@ -476,17 +507,17 @@
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">Team Builder</span>
-            <span class="tag">Education</span>
+            <span class="tag">Step 2</span>
+            <span class="tag">Label</span>
           </div>
-          <h3>Entrepreneurship Through Play</h3>
+          <h3>Get the AlchemyScore™ label</h3>
           <p>
-            Educational match game that teaches teamwork and profitable company-building by aligning roles and archetypes.
+            Music is processed like nutrition facts—so the impact becomes visible before it shapes behavior.
           </p>
           <ul class="bullets">
-            <li>Role alignment + strategy thinking</li>
-            <li>Youth-friendly, teacher-friendly</li>
-            <li>Future: curricula + dashboards</li>
+            <li>9-category scoring breakdown</li>
+            <li>Clarity on substance + blueprint</li>
+            <li>Actionable summary</li>
           </ul>
         </div>
       </article>
@@ -494,93 +525,211 @@
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">FlowState</span>
-            <span class="tag">Creator Tools</span>
+            <span class="tag">Step 3</span>
+            <span class="tag">Upgrade</span>
           </div>
-          <h3>Freestyle → Finished Song</h3>
+          <h3>Apply or RECODE the message</h3>
           <p>
-            Detects cadence patterns, strengthens structure, and helps generate hooks—turning raw bars into complete records.
+            You get direct instructions for what to keep, what to discard, and how to evolve the output.
           </p>
           <ul class="bullets">
-            <li>Flow pattern recognition</li>
-            <li>Hook + structure generation</li>
-            <li>Future: session workflow</li>
+            <li>Use / Avoid / Strategy guidance</li>
+            <li>RECODE Mode for upgraded logic</li>
+            <li>Future: saved reports + sharing</li>
           </ul>
         </div>
       </article>
     </section>
 
-    <div class="sectionTitle" id="funding">
-      <h2>Funding</h2><div class="line"></div>
+    <!-- FEATURES -->
+    <div class="sectionTitle" id="features">
+      <h2>Core features</h2><div class="line"></div>
     </div>
 
-    <section class="funding">
-      <div class="fundGrid">
-
-        <div class="panel">
-          <div class="panelInner">
-            <div class="kicker"><span class="sig"></span>Seed Raise</div>
-            <h2 style="margin:10px 0 8px; font-size:28px; letter-spacing:-.02em;">$500,000 Seed Round</h2>
-            <p class="sub" style="font-size:15px">
-              Funding completes production infrastructure (speed + security), expands AI/API integrations, and launches AlchemyScore™ + RECODE at scale.
-            </p>
-            <div class="heroCtas" style="margin-top:16px">
-              <a class="btn primary" href="mailto:contact@seeavision.net?subject=SeeAVision%20Seed%20Round%20Inquiry">Email for Deck →</a>
-              <a class="btn" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Demo Link</a>
-            </div>
-
-            <div class="mini" style="margin-top:14px">
-              <span>Prototype Live</span>
-              <span>Market Timing</span>
-              <span>AI + Culture</span>
-              <span>Education Ready</span>
-            </div>
+    <section class="cards">
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Scoring</span>
+            <span class="tag">9 Categories</span>
           </div>
+          <h3>Music decoded, not censored</h3>
+          <p>Scores across lyrical substance, delivery, musicality, and blueprint impact—built for clarity, not hype.</p>
+          <ul class="bullets">
+            <li>Vertical, readable breakdown</li>
+            <li>Bar-chart friendly visuals</li>
+            <li>Legacy potential layer</li>
+          </ul>
         </div>
+      </article>
 
-        <div class="panel">
-          <div class="panelInner">
-            <h3 style="margin:0 0 10px; font-size:16px; letter-spacing:.18em; text-transform:uppercase;">Use of Funds</h3>
-
-            <table class="table" role="table" aria-label="Budget Table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Budget</th>
-                  <th>Purpose</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>Product Architecture & Development</td><td>$150,000</td><td>Full-stack build, scoring logic, indie portal</td></tr>
-                <tr><td>Creative & Operational Leadership</td><td>$125,000</td><td>Strategy, branding, product flow</td></tr>
-                <tr><td>Marketing & Launch Campaign</td><td>$75,000</td><td>Reels, influencer push, platform trailers</td></tr>
-                <tr><td>UX/UI + Visual Design</td><td>$35,000</td><td>App store–ready interface</td></tr>
-                <tr><td>AI/API Infrastructure</td><td>$25,000</td><td>OpenAI, Genius, NLP scoring</td></tr>
-                <tr><td>Legal + IP Protection</td><td>$15,000</td><td>Trademark, terms, privacy</td></tr>
-                <tr><td>Operations & Team Support</td><td>$20,000</td><td>Coordination, admin</td></tr>
-                <tr><td>Indie Submission System</td><td>$30,000</td><td>Artist dashboard + rating interface</td></tr>
-                <tr><td>Distribution & Travel</td><td>$20,000</td><td>Label convos, live pitches</td></tr>
-                <tr><td>Emergency + Flex Buffer</td><td>$20,000</td><td>Growth pivots</td></tr>
-              </tbody>
-            </table>
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Compare</span>
+            <span class="tag">Artist vs Artist</span>
           </div>
+          <h3>Compare Mode</h3>
+          <p>Put two artists or two songs side-by-side and see the difference in code trajectory and outcomes.</p>
+          <ul class="bullets">
+            <li>Category-by-category comparison</li>
+            <li>Same chart, two bars</li>
+            <li>Clear “Use / Avoid” contrast</li>
+          </ul>
         </div>
+      </article>
 
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Creator</span>
+            <span class="tag">RECODE</span>
+          </div>
+          <h3>RECODE Mode</h3>
+          <p>Rewrite harmful or unwise logic into upgraded logic while keeping a similar cadence or rhythm.</p>
+          <ul class="bullets">
+            <li>Fun remixer or serious upgrader</li>
+            <li>Cadence-preserving rewrites</li>
+            <li>Future: “Recode Packs”</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- PRICING -->
+    <div class="sectionTitle" id="pricing">
+      <h2>Pricing</h2><div class="line"></div>
+    </div>
+
+    <section class="pricing">
+      <div class="price">
+        <div class="priceInner">
+          <div class="tagRow">
+            <span class="tag">Starter</span>
+            <span class="tag">Listeners</span>
+          </div>
+          <h3>Single Report</h3>
+          <div class="big">$9</div>
+          <p class="small">One song or lyric upload analysis.</p>
+          <div class="divider"></div>
+          <ul class="bullets">
+            <li>AlchemyScore breakdown</li>
+            <li>Use / Avoid / Strategy</li>
+            <li>Shareable summary</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="foot">
-        <div>
-          <b>Big Claim:</b> We rate food, track steps, manage stocks—yet we don’t label the media we consume daily. AlchemyScore™ fixes that.
-        </div>
-        <div>
-          Questions / partnerships: <a href="mailto:contact@seeavision.net">contact@seeavision.net</a>
+      <div class="price">
+        <div class="priceInner">
+          <div class="tagRow">
+            <span class="tag">Creator</span>
+            <span class="tag">Artists</span>
+          </div>
+          <h3>Artist Pack</h3>
+          <div class="big">$29</div>
+          <p class="small">Multiple analyses + RECODE support.</p>
+          <div class="divider"></div>
+          <ul class="bullets">
+            <li>3 analyses/month</li>
+            <li>RECODE Mode access</li>
+            <li>Save reports (beta)</li>
+          </ul>
         </div>
       </div>
+
+      <div class="price">
+        <div class="priceInner">
+          <div class="tagRow">
+            <span class="tag">Pro</span>
+            <span class="tag">Unlimited</span>
+          </div>
+          <h3>Unlimited</h3>
+          <div class="big">$49</div>
+          <p class="small">For heavy users, educators, and curators.</p>
+          <div class="divider"></div>
+          <ul class="bullets">
+            <li>Unlimited analyses</li>
+            <li>Compare mode</li>
+            <li>Priority speed (prod)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="callout" style="margin-top:14px">
+      <div class="calloutLeft">
+        <strong>Want early access?</strong>
+        <span>Email and I’ll send the beta link + rollout updates.</span>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Beta%20Access">Request Beta →</a>
+        <a class="btn" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try Demo</a>
+      </div>
+    </div>
+
+    <!-- INVESTOR -->
+    <div class="sectionTitle" id="funding">
+      <h2>Investor snapshot</h2><div class="line"></div>
+    </div>
+
+    <section class="cards">
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Raise</span>
+            <span class="tag">$500K Seed</span>
+          </div>
+          <h3>What funding unlocks</h3>
+          <p>Production speed, security, stable hosting, and the full feature set needed for paid scale.</p>
+          <ul class="bullets">
+            <li>Move from demo hosting → production infra</li>
+            <li>Secure API key handling + rate limits</li>
+            <li>Background jobs + caching for speed</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Market</span>
+            <span class="tag">Mass daily usage</span>
+          </div>
+          <h3>Why now</h3>
+          <p>AI makes analysis scalable, and culture is asking for clarity—without censorship.</p>
+          <ul class="bullets">
+            <li>Music is consumed daily, globally</li>
+            <li>Parents + educators need tools</li>
+            <li>Artists need context without blame</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="cardInner">
+          <div class="tagRow">
+            <span class="tag">Contact</span>
+            <span class="tag">Deck</span>
+          </div>
+          <h3>Request the deck</h3>
+          <p>If you’re aligned with cultural tech, education, or creator tools, let’s talk.</p>
+          <ul class="bullets">
+            <li>Email for pitch deck + demo walkthrough</li>
+            <li>Partnerships welcome</li>
+            <li>Press / community pilots</li>
+          </ul>
+          <div class="heroCtas" style="margin-top:12px">
+            <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Investor%20Deck%20Request">Email for Deck →</a>
+            <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Partnership">Partnership</a>
+          </div>
+        </div>
+      </article>
     </section>
 
     <footer>
-      <div>© <span id="y"></span> SeeAVision™ • Cultural Technology</div>
-      <div class="pill">education • creativity • conscious consumption</div>
+      <div>© <span id="y"></span> AlchemyScore™ • A SeeAVision™ Project</div>
+      <div class="pill">context • clarity • conscious consumption</div>
     </footer>
 
   </div>
@@ -589,5 +738,4 @@
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
 </body>
-</html>
-```0
+  </html>
