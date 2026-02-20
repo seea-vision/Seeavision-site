@@ -3,31 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AlchemyScore™ — The Nutrition Label for Music</title>
-  <meta name="description" content="AlchemyScore™ is a nutrition label for lyrics: what to take in, what to discard, and how to apply the message." />
+  <title>AlchemyScore™ — Demo Phase</title>
+  <meta name="description" content="AlchemyScore™ is a nutrition label for music: Use, Avoid, and Strategy — so people can consume lyrics consciously." />
 
   <style>
     :root{
-      --ink:#05060f;
-      --night:#070818;
-      --obsidian:#0a0c1f;
+      /* Black Utopia palette (universal, not city) */
+      --bg0:#05050b;
+      --bg1:#070818;
+      --bg2:#0b0f1c;
+
+      --gold:#f0c766;
+      --emerald:#45f3b0;
+      --indigo:#7b7cff;
+      --aqua:#4de6ff;
 
       --glass:rgba(255,255,255,.06);
-      --glass2:rgba(255,255,255,.09);
-      --line:rgba(255,255,255,.14);
+      --glass2:rgba(255,255,255,.10);
+      --line:rgba(255,255,255,.12);
 
       --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.70);
+      --muted:rgba(255,255,255,.72);
       --muted2:rgba(255,255,255,.56);
 
-      --azure:#52e6ff;
-      --violet:#b072ff;
-      --sun:#ffd36b;
-      --emerald:#3cffb0;
-
       --radius:26px;
-      --shadow:0 22px 90px rgba(0,0,0,.60);
-      --shadow2:0 14px 44px rgba(0,0,0,.46);
+      --shadow:0 22px 90px rgba(0,0,0,.62);
+      --shadow2:0 14px 44px rgba(0,0,0,.48);
 
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -40,58 +41,51 @@
       font-family:var(--sans);
       color:var(--text);
       background:
-        radial-gradient(1200px 680px at 20% 10%, rgba(82,230,255,.16), transparent 55%),
-        radial-gradient(1100px 620px at 82% 18%, rgba(176,114,255,.16), transparent 58%),
-        radial-gradient(900px 560px at 45% 92%, rgba(60,255,176,.10), transparent 55%),
-        radial-gradient(800px 520px at 70% 88%, rgba(255,211,107,.09), transparent 55%),
-        linear-gradient(180deg, var(--ink), var(--night) 50%, var(--obsidian));
+        radial-gradient(1200px 680px at 18% 8%, rgba(240,199,102,.14), transparent 55%),
+        radial-gradient(1100px 620px at 86% 14%, rgba(69,243,176,.12), transparent 58%),
+        radial-gradient(900px 560px at 50% 92%, rgba(123,124,255,.10), transparent 55%),
+        radial-gradient(800px 520px at 72% 88%, rgba(77,230,255,.08), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 45%, var(--bg2));
       overflow-x:hidden;
     }
 
-    /* ambient depth lines */
-    .depthLines{
+    /* Soft “sacred grid” depth (not city) */
+    .depth{
       position:fixed; inset:-30vh -20vw;
       pointer-events:none;
-      opacity:.18;
+      opacity:.14;
       background:
         repeating-linear-gradient(90deg,
-          rgba(255,255,255,.09) 0px,
-          rgba(255,255,255,.09) 1px,
+          rgba(255,255,255,.08) 0px,
+          rgba(255,255,255,.08) 1px,
           transparent 1px,
-          transparent 72px
+          transparent 84px
         );
-      transform: perspective(900px) rotateX(62deg) translateY(-150px);
+      transform: perspective(900px) rotateX(63deg) translateY(-160px);
       filter: blur(.35px);
-      animation: drift 12s ease-in-out infinite alternate;
+      animation: drift 14s ease-in-out infinite alternate;
     }
     @keyframes drift{
-      0%{transform: perspective(900px) rotateX(62deg) translate3d(-14px,-150px,0)}
-      100%{transform: perspective(900px) rotateX(62deg) translate3d(14px,-132px,0)}
+      0%{transform: perspective(900px) rotateX(63deg) translate3d(-12px,-160px,0)}
+      100%{transform: perspective(900px) rotateX(63deg) translate3d(12px,-140px,0)}
     }
 
-    /* aurora orbs */
-    .orb{
-      position:fixed; border-radius:999px;
-      filter: blur(22px);
-      opacity:.34;
-      pointer-events:none;
-      mix-blend-mode: screen;
-      animation: float 10s ease-in-out infinite;
-    }
-    .orb.one{width:380px;height:380px;left:-130px;top:80px;background:rgba(82,230,255,.95)}
-    .orb.two{width:420px;height:420px;right:-170px;top:120px;background:rgba(176,114,255,.90);animation-duration:12s}
-    .orb.three{width:320px;height:320px;left:38%;bottom:-160px;background:rgba(60,255,176,.78);animation-duration:11s}
-    .orb.four{width:260px;height:260px;right:12%;bottom:-120px;background:rgba(255,211,107,.70);animation-duration:13s}
-    @keyframes float{ 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-18px,0)} }
+    /* Warm orbs (less neon, more soul) */
+    .orb{position:fixed; border-radius:999px; filter: blur(26px); opacity:.26; pointer-events:none; mix-blend-mode: screen; animation: float 12s ease-in-out infinite;}
+    .orb.one{width:420px;height:420px;left:-170px;top:70px;background:rgba(240,199,102,.92)}
+    .orb.two{width:460px;height:460px;right:-210px;top:120px;background:rgba(69,243,176,.86);animation-duration:13s}
+    .orb.three{width:360px;height:360px;left:38%;bottom:-190px;background:rgba(123,124,255,.72);animation-duration:14s}
+    .orb.four{width:280px;height:280px;right:10%;bottom:-140px;background:rgba(77,230,255,.62);animation-duration:15s}
+    @keyframes float{0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-16px,0)}}
 
+    .wrap{max-width:1120px;margin:0 auto;padding:18px 16px 70px; position:relative; z-index:2}
     a{color:inherit}
-    .wrap{max-width:1120px;margin:0 auto;padding:22px 16px 70px; position:relative; z-index:2}
 
-    /* topbar */
+    /* Top bar (mobile clean) */
     .topbar{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px;
-      padding:14px 14px;
+      padding:12px 12px;
       border:1px solid var(--line);
       background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       border-radius:999px;
@@ -103,29 +97,29 @@
     .logo{
       width:38px;height:38px;border-radius:14px;
       background:
-        radial-gradient(circle at 25% 30%, rgba(82,230,255,.95), transparent 45%),
-        radial-gradient(circle at 78% 35%, rgba(176,114,255,.90), transparent 50%),
-        radial-gradient(circle at 38% 82%, rgba(60,255,176,.70), transparent 50%),
-        radial-gradient(circle at 70% 82%, rgba(255,211,107,.55), transparent 55%),
+        radial-gradient(circle at 28% 30%, rgba(240,199,102,.95), transparent 48%),
+        radial-gradient(circle at 78% 32%, rgba(69,243,176,.86), transparent 52%),
+        radial-gradient(circle at 40% 82%, rgba(123,124,255,.68), transparent 52%),
         rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.16);
-      box-shadow: 0 0 26px rgba(82,230,255,.16), 0 0 26px rgba(176,114,255,.12);
+      box-shadow: 0 0 26px rgba(240,199,102,.10), 0 0 26px rgba(69,243,176,.08);
     }
     .brand h1{
       font-size:14px; margin:0; letter-spacing:.16em; text-transform:uppercase;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .pill{
+    .subtitle{
       font-family:var(--mono);
       font-size:12px;
-      padding:7px 10px;
+      padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
       color:var(--muted);
-      white-space:nowrap;
+      display:inline-block;
+      margin-top:3px;
     }
-    .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       padding:10px 12px;
@@ -137,18 +131,66 @@
       font-weight:800;
       font-size:13px;
       transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      cursor:pointer;
     }
     .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.26)}
     .btn.primary{
-      border-color: rgba(82,230,255,.36);
-      background: linear-gradient(90deg, rgba(82,230,255,.18), rgba(176,114,255,.16));
-      box-shadow: 0 0 28px rgba(82,230,255,.12);
+      border-color: rgba(240,199,102,.40);
+      background: linear-gradient(90deg, rgba(240,199,102,.16), rgba(69,243,176,.12));
+      box-shadow: 0 0 28px rgba(240,199,102,.10);
     }
 
-    /* panels */
+    /* Desktop nav links */
+    .navlinks{display:flex; gap:10px; align-items:center}
+    .navlinks a{white-space:nowrap}
+    .menuBtn{display:none}
+
+    @media (max-width: 780px){
+      .navlinks{display:none}
+      .menuBtn{display:inline-flex}
+    }
+
+    /* Menu overlay */
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.58);
+      backdrop-filter: blur(10px);
+      display:none;
+      z-index:50;
+      padding:18px;
+    }
+    .overlay.open{display:block}
+    .sheet{
+      max-width:520px;
+      margin:12px auto 0;
+      border:1px solid rgba(255,255,255,.16);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-radius:24px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .sheetHeader{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 14px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .sheetHeader strong{letter-spacing:.12em; text-transform:uppercase; font-size:12px; color:var(--muted)}
+    .sheetBody{padding:12px}
+    .sheetBody a{
+      display:flex;
+      padding:12px 12px;
+      border-radius:16px;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      margin-bottom:10px;
+      font-weight:800;
+    }
+
+    /* Panels */
     .panel{
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       border-radius:var(--radius);
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
@@ -159,12 +201,22 @@
       content:"";
       position:absolute; inset:-2px;
       background:
-        radial-gradient(800px 250px at 18% 0%, rgba(82,230,255,.22), transparent 55%),
-        radial-gradient(760px 250px at 90% 10%, rgba(176,114,255,.18), transparent 60%),
-        radial-gradient(700px 250px at 70% 110%, rgba(255,211,107,.10), transparent 60%);
+        radial-gradient(820px 260px at 18% 0%, rgba(240,199,102,.18), transparent 58%),
+        radial-gradient(760px 260px at 90% 10%, rgba(69,243,176,.14), transparent 60%),
+        radial-gradient(700px 260px at 70% 110%, rgba(123,124,255,.10), transparent 60%);
       opacity:.95; pointer-events:none;
     }
     .panelInner{position:relative; padding:26px}
+
+    /* HERO */
+    .hero{padding:26px 6px 10px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width:900px){ .heroGrid{grid-template-columns:1fr} }
 
     .kicker{
       font-family:var(--mono);
@@ -176,20 +228,9 @@
     }
     .sig{
       width:10px;height:10px;border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, var(--azure), rgba(255,255,255,.2));
-      box-shadow: 0 0 18px rgba(82,230,255,.35);
+      background: radial-gradient(circle at 30% 30%, var(--gold), rgba(255,255,255,.2));
+      box-shadow: 0 0 18px rgba(240,199,102,.28);
     }
-
-    /* HERO */
-    .hero{padding:34px 6px 10px}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    @media (max-width:900px){ .heroGrid{grid-template-columns:1fr} }
-
     .headline{
       margin:12px 0 10px;
       font-size:52px;
@@ -203,32 +244,24 @@
       color:var(--muted);
       font-size:16px;
       line-height:1.65;
-      max-width:68ch;
+      max-width:70ch;
     }
 
-    .heroCtas{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
-    .mini{
-      margin-top:18px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      color:var(--muted2);
-      font-size:13px;
-    }
-    .mini span{
-      border:1px solid rgba(255,255,255,.12);
+    .heroCtas{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+
+    .banner{
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.14);
       background:rgba(255,255,255,.04);
-      padding:8px 10px;
-      border-radius:999px;
-      font-family:var(--mono);
+      border-radius:18px;
+      padding:12px 12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
     }
+    .banner b{color:rgba(255,255,255,.88)}
 
-    /* Right: “What you get” */
-    .rightHeader{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-      margin-bottom:12px;
-    }
-    .rightHeader h3{margin:0; font-size:16px; letter-spacing:.16em; text-transform:uppercase}
-    .rightHeader p{margin:0; color:var(--muted); font-size:13px; line-height:1.5; max-width:34ch}
-
+    /* Right panel list */
     .stack{display:grid; gap:10px}
     .item{
       display:flex; gap:12px; align-items:flex-start;
@@ -247,7 +280,7 @@
     .item h4{margin:0; font-size:14px}
     .item p{margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.45}
 
-    /* Section headings */
+    /* Section titles */
     .sectionTitle{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       margin:22px 6px 10px;
@@ -260,7 +293,6 @@
       background:linear-gradient(90deg, rgba(255,255,255,.14), transparent);
     }
 
-    /* 3-column cards */
     .cards{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -281,9 +313,9 @@
       content:"";
       position:absolute; inset:-1px;
       background:
-        radial-gradient(560px 170px at 18% -10%, rgba(82,230,255,.18), transparent 55%),
-        radial-gradient(560px 180px at 100% 0%, rgba(176,114,255,.14), transparent 60%),
-        radial-gradient(520px 180px at 60% 120%, rgba(255,211,107,.10), transparent 60%);
+        radial-gradient(560px 170px at 18% -10%, rgba(240,199,102,.12), transparent 58%),
+        radial-gradient(560px 180px at 100% 0%, rgba(69,243,176,.10), transparent 60%),
+        radial-gradient(520px 180px at 60% 120%, rgba(123,124,255,.08), transparent 60%);
       opacity:.95; pointer-events:none;
     }
     .cardInner{position:relative; padding:18px}
@@ -293,64 +325,15 @@
       font-size:12px;
       padding:6px 10px;
       border-radius:999px;
-      background:rgba(255,255,255,.05);
+      background:rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.12);
       color:var(--muted);
+      white-space:nowrap;
     }
     .card h3{margin:12px 0 8px; font-size:18px}
     .card p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
     .bullets{margin:12px 0 0; padding-left:18px; color:var(--muted2); font-size:13px}
     .bullets li{margin:6px 0}
-
-    /* Demo callout */
-    .callout{
-      margin:14px 6px 0;
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(90deg, rgba(82,230,255,.10), rgba(176,114,255,.08));
-      border-radius:22px;
-      padding:14px 14px;
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(14px);
-    }
-    .callout strong{letter-spacing:.02em}
-    .callout span{color:var(--muted)}
-    .calloutLeft{display:flex; flex-direction:column; gap:4px}
-
-    /* Pricing */
-    .pricing{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-      padding:0 6px;
-    }
-    @media (max-width:900px){ .pricing{grid-template-columns:1fr} }
-    .price{
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius:var(--radius);
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(16px);
-      overflow:hidden;
-      position:relative;
-    }
-    .price::before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        radial-gradient(560px 170px at 18% -10%, rgba(60,255,176,.13), transparent 55%),
-        radial-gradient(560px 180px at 100% 0%, rgba(255,211,107,.10), transparent 60%);
-      opacity:.95; pointer-events:none;
-    }
-    .priceInner{position:relative; padding:18px}
-    .price h3{margin:6px 0 0; font-size:18px}
-    .big{
-      margin:10px 0 6px;
-      font-size:34px;
-      letter-spacing:-.02em;
-    }
-    .small{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
-    .divider{height:1px;background:rgba(255,255,255,.12); margin:14px 0}
 
     /* Footer */
     footer{
@@ -364,11 +347,28 @@
 </head>
 
 <body>
-  <div class="depthLines"></div>
+  <div class="depth"></div>
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
   <div class="orb four"></div>
+
+  <!-- Mobile menu overlay -->
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="sheetHeader">
+        <strong>Menu</strong>
+        <button class="btn" onclick="closeMenu()">Close</button>
+      </div>
+      <div class="sheetBody">
+        <a href="#how" onclick="closeMenu()">How it works</a>
+        <a href="#features" onclick="closeMenu()">Features</a>
+        <a href="#needs" onclick="closeMenu()">What we need</a>
+        <a href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer" onclick="closeMenu()">Try the demo →</a>
+        <a href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access" onclick="closeMenu()">Early access</a>
+      </div>
+    </div>
+  </div>
 
   <div class="wrap">
 
@@ -377,16 +377,20 @@
         <div class="logo" aria-hidden="true"></div>
         <div style="min-width:0">
           <h1>AlchemyScore™</h1>
-          <div class="pill">The Nutrition Label for Music</div>
+          <div class="subtitle">Demo Phase • The Nutrition Label for Music</div>
         </div>
       </div>
 
-      <div class="actions">
+      <!-- desktop links -->
+      <div class="navlinks">
         <a class="btn" href="#how">How it works</a>
         <a class="btn" href="#features">Features</a>
-        <a class="btn" href="#pricing">Pricing</a>
+        <a class="btn" href="#needs">What we need</a>
         <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
       </div>
+
+      <!-- mobile menu -->
+      <button class="btn menuBtn" onclick="openMenu()">Menu</button>
     </div>
 
     <!-- HERO -->
@@ -396,45 +400,36 @@
         <div class="panel">
           <div class="panelInner">
             <div class="kicker"><span class="sig"></span>AlchemyScore™ by SeeAVision</div>
-            <h2 class="headline">Stop consuming lyrics blind.</h2>
+            <h2 class="headline">Music needs a nutrition label.</h2>
             <p class="sub">
-              <b>AlchemyScore™</b> breaks down music like a nutrition label—so you know what you’re feeding your mind.
-              Every analysis shows: <b>what to take in</b>, <b>what to discard</b>, and <b>how to apply the message</b>.
+              <b>AlchemyScore™</b> helps people consume lyrics consciously by translating a song into clear guidance:
+              <b>Use</b> (what to digest), <b>Avoid</b> (what to discard), and <b>Strategy</b> (how to apply it for growth).
               <br/><br/>
-              Not censorship. <b>Context.</b>
+              This is a <b>working demo</b>. Production funding upgrades speed, security, and integrations.
             </p>
 
             <div class="heroCtas">
               <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
-              <a class="btn" href="#pricing">Get Beta Access</a>
-              <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Partnership">Partnerships</a>
+              <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access">Get Early Access</a>
+              <a class="btn" href="#needs">What we need</a>
             </div>
 
-            <div class="mini">
-              <span>Listeners</span>
-              <span>Artists</span>
-              <span>Parents</span>
-              <span>Educators</span>
+            <div class="banner">
+              <b>Honest note:</b> The demo may load slowly (hosted on Render). The goal is a faster standalone build with secure keys, caching, and stable integrations.
             </div>
           </div>
         </div>
 
         <div class="panel">
           <div class="panelInner">
-            <div class="rightHeader">
-              <div>
-                <h3>What you get</h3>
-                <p>Clear outputs that make music actionable—without killing creativity.</p>
-              </div>
-              <div class="pill">Live demo available</div>
-            </div>
+            <div class="kicker"><span class="sig"></span>Output you actually understand</div>
 
-            <div class="stack">
+            <div class="stack" style="margin-top:12px">
               <div class="item">
                 <div class="icon">✅</div>
                 <div>
                   <h4>Use</h4>
-                  <p>What to digest positively from the message.</p>
+                  <p>What to take in positively from the message.</p>
                 </div>
               </div>
 
@@ -450,7 +445,7 @@
                 <div class="icon">🧭</div>
                 <div>
                   <h4>Strategy</h4>
-                  <p>How to apply the message for growth—listener or creator.</p>
+                  <p>How to apply the message in real life (listener or creator).</p>
                 </div>
               </div>
 
@@ -458,7 +453,7 @@
                 <div class="icon">🧠</div>
                 <div>
                   <h4>RECODE Mode</h4>
-                  <p>Rewrite harmful logic in similar cadence—upgrade the code without losing the rhythm.</p>
+                  <p>Rewrites harmful logic into upgraded logic while respecting cadence (optional mode).</p>
                 </div>
               </div>
             </div>
@@ -467,20 +462,9 @@
         </div>
 
       </div>
-
-      <div class="callout">
-        <div class="calloutLeft">
-          <strong>Demo note:</strong>
-          <span>Render demo may load slowly. The production build will be faster + secured.</span>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <a class="btn" href="#funding">Investor info</a>
-          <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Open Demo →</a>
-        </div>
-      </div>
     </section>
 
-    <!-- HOW IT WORKS -->
+    <!-- HOW -->
     <div class="sectionTitle" id="how">
       <h2>How it works</h2><div class="line"></div>
     </div>
@@ -492,14 +476,12 @@
             <span class="tag">Step 1</span>
             <span class="tag">Input</span>
           </div>
-          <h3>Paste lyrics or choose an artist</h3>
-          <p>
-            Analyze a song, an artist, or your own unreleased lyrics. The system extracts themes, intent, and behavioral signals.
-          </p>
+          <h3>Analyze lyrics or an artist</h3>
+          <p>Paste lyrics, enter a song, or run an artist scan—then the system extracts themes, intent, and outcomes.</p>
           <ul class="bullets">
-            <li>Lyric upload mode (creator-friendly)</li>
-            <li>Song + artist analysis paths</li>
-            <li>Compare mode support</li>
+            <li>Lyric upload for unreleased bars</li>
+            <li>Song/artist pathways</li>
+            <li>Compare mode supported</li>
           </ul>
         </div>
       </article>
@@ -510,14 +492,12 @@
             <span class="tag">Step 2</span>
             <span class="tag">Label</span>
           </div>
-          <h3>Get the AlchemyScore™ label</h3>
-          <p>
-            Music is processed like nutrition facts—so the impact becomes visible before it shapes behavior.
-          </p>
+          <h3>Get the AlchemyScore™ breakdown</h3>
+          <p>Music becomes visible like nutrition facts—so impact is clear before it shapes behavior.</p>
           <ul class="bullets">
-            <li>9-category scoring breakdown</li>
-            <li>Clarity on substance + blueprint</li>
-            <li>Actionable summary</li>
+            <li>9-category score breakdown</li>
+            <li>Blueprint + substance clarity</li>
+            <li>Readable outputs (no fluff)</li>
           </ul>
         </div>
       </article>
@@ -526,16 +506,14 @@
         <div class="cardInner">
           <div class="tagRow">
             <span class="tag">Step 3</span>
-            <span class="tag">Upgrade</span>
+            <span class="tag">Apply</span>
           </div>
-          <h3>Apply or RECODE the message</h3>
-          <p>
-            You get direct instructions for what to keep, what to discard, and how to evolve the output.
-          </p>
+          <h3>Use / Avoid / Strategy</h3>
+          <p>You get practical guidance—what to keep, what to discard, and how to upgrade the message.</p>
           <ul class="bullets">
-            <li>Use / Avoid / Strategy guidance</li>
-            <li>RECODE Mode for upgraded logic</li>
-            <li>Future: saved reports + sharing</li>
+            <li>Listener protection layer</li>
+            <li>Artist context layer</li>
+            <li>Optional RECODE upgrades</li>
           </ul>
         </div>
       </article>
@@ -551,14 +529,14 @@
         <div class="cardInner">
           <div class="tagRow">
             <span class="tag">Scoring</span>
-            <span class="tag">9 Categories</span>
+            <span class="tag">Clarity</span>
           </div>
-          <h3>Music decoded, not censored</h3>
-          <p>Scores across lyrical substance, delivery, musicality, and blueprint impact—built for clarity, not hype.</p>
+          <h3>9-category system</h3>
+          <p>Breaks down the message, delivery, and blueprint outcomes—built to be understandable, not trendy.</p>
           <ul class="bullets">
-            <li>Vertical, readable breakdown</li>
-            <li>Bar-chart friendly visuals</li>
-            <li>Legacy potential layer</li>
+            <li>Vertical score read (easy)</li>
+            <li>Bar-chart ready visuals</li>
+            <li>Legacy + trajectory layer</li>
           </ul>
         </div>
       </article>
@@ -567,14 +545,14 @@
         <div class="cardInner">
           <div class="tagRow">
             <span class="tag">Compare</span>
-            <span class="tag">Artist vs Artist</span>
+            <span class="tag">Side-by-side</span>
           </div>
-          <h3>Compare Mode</h3>
-          <p>Put two artists or two songs side-by-side and see the difference in code trajectory and outcomes.</p>
+          <h3>Compare mode</h3>
+          <p>Compare two artists or songs and see the real difference in outcomes and code trajectory.</p>
           <ul class="bullets">
             <li>Category-by-category comparison</li>
-            <li>Same chart, two bars</li>
-            <li>Clear “Use / Avoid” contrast</li>
+            <li>One clear chart, two bars</li>
+            <li>Use/Avoid contrast</li>
           </ul>
         </div>
       </article>
@@ -582,110 +560,38 @@
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">Creator</span>
             <span class="tag">RECODE</span>
+            <span class="tag">Upgrade</span>
           </div>
-          <h3>RECODE Mode</h3>
-          <p>Rewrite harmful or unwise logic into upgraded logic while keeping a similar cadence or rhythm.</p>
+          <h3>RECODE mode</h3>
+          <p>Upgrades harmful logic into constructive logic while preserving cadence (when enabled).</p>
           <ul class="bullets">
-            <li>Fun remixer or serious upgrader</li>
-            <li>Cadence-preserving rewrites</li>
-            <li>Future: “Recode Packs”</li>
+            <li>Remix or serious upgrade</li>
+            <li>Cadence-respecting rewrites</li>
+            <li>Future: saved recodes</li>
           </ul>
         </div>
       </article>
     </section>
 
-    <!-- PRICING -->
-    <div class="sectionTitle" id="pricing">
-      <h2>Pricing</h2><div class="line"></div>
-    </div>
-
-    <section class="pricing">
-      <div class="price">
-        <div class="priceInner">
-          <div class="tagRow">
-            <span class="tag">Starter</span>
-            <span class="tag">Listeners</span>
-          </div>
-          <h3>Single Report</h3>
-          <div class="big">$9</div>
-          <p class="small">One song or lyric upload analysis.</p>
-          <div class="divider"></div>
-          <ul class="bullets">
-            <li>AlchemyScore breakdown</li>
-            <li>Use / Avoid / Strategy</li>
-            <li>Shareable summary</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="price">
-        <div class="priceInner">
-          <div class="tagRow">
-            <span class="tag">Creator</span>
-            <span class="tag">Artists</span>
-          </div>
-          <h3>Artist Pack</h3>
-          <div class="big">$29</div>
-          <p class="small">Multiple analyses + RECODE support.</p>
-          <div class="divider"></div>
-          <ul class="bullets">
-            <li>3 analyses/month</li>
-            <li>RECODE Mode access</li>
-            <li>Save reports (beta)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="price">
-        <div class="priceInner">
-          <div class="tagRow">
-            <span class="tag">Pro</span>
-            <span class="tag">Unlimited</span>
-          </div>
-          <h3>Unlimited</h3>
-          <div class="big">$49</div>
-          <p class="small">For heavy users, educators, and curators.</p>
-          <div class="divider"></div>
-          <ul class="bullets">
-            <li>Unlimited analyses</li>
-            <li>Compare mode</li>
-            <li>Priority speed (prod)</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <div class="callout" style="margin-top:14px">
-      <div class="calloutLeft">
-        <strong>Want early access?</strong>
-        <span>Email and I’ll send the beta link + rollout updates.</span>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap">
-        <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Beta%20Access">Request Beta →</a>
-        <a class="btn" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try Demo</a>
-      </div>
-    </div>
-
-    <!-- INVESTOR -->
-    <div class="sectionTitle" id="funding">
-      <h2>Investor snapshot</h2><div class="line"></div>
+    <!-- NEEDS -->
+    <div class="sectionTitle" id="needs">
+      <h2>What we need to finish</h2><div class="line"></div>
     </div>
 
     <section class="cards">
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">Raise</span>
-            <span class="tag">$500K Seed</span>
+            <span class="tag">Speed</span>
+            <span class="tag">Reliability</span>
           </div>
-          <h3>What funding unlocks</h3>
-          <p>Production speed, security, stable hosting, and the full feature set needed for paid scale.</p>
+          <h3>Standalone production hosting</h3>
+          <p>Faster load times, caching, background jobs, and stable uptime (not slow demo hosting).</p>
           <ul class="bullets">
-            <li>Move from demo hosting → production infra</li>
-            <li>Secure API key handling + rate limits</li>
-            <li>Background jobs + caching for speed</li>
+            <li>Better servers + caching</li>
+            <li>Queue/background processing</li>
+            <li>Monitoring + analytics</li>
           </ul>
         </div>
       </article>
@@ -693,15 +599,15 @@
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">Market</span>
-            <span class="tag">Mass daily usage</span>
+            <span class="tag">Security</span>
+            <span class="tag">Keys</span>
           </div>
-          <h3>Why now</h3>
-          <p>AI makes analysis scalable, and culture is asking for clarity—without censorship.</p>
+          <h3>Secure API + integrations</h3>
+          <p>Proper secret management and paid keys for lyrics/music services and analysis infrastructure.</p>
           <ul class="bullets">
-            <li>Music is consumed daily, globally</li>
-            <li>Parents + educators need tools</li>
-            <li>Artists need context without blame</li>
+            <li>Secure key storage</li>
+            <li>Rate limiting</li>
+            <li>Integrations (lyrics + music)</li>
           </ul>
         </div>
       </article>
@@ -709,33 +615,46 @@
       <article class="card">
         <div class="cardInner">
           <div class="tagRow">
-            <span class="tag">Contact</span>
-            <span class="tag">Deck</span>
+            <span class="tag">Goal</span>
+            <span class="tag">100 users</span>
           </div>
-          <h3>Request the deck</h3>
-          <p>If you’re aligned with cultural tech, education, or creator tools, let’s talk.</p>
+          <h3>First 100 paying users</h3>
+          <p>Funding helps ship the production version so we can validate paid demand with real users.</p>
           <ul class="bullets">
-            <li>Email for pitch deck + demo walkthrough</li>
-            <li>Partnerships welcome</li>
-            <li>Press / community pilots</li>
+            <li>Clean UX + onboarding</li>
+            <li>Saved reports</li>
+            <li>Share + referral loop</li>
           </ul>
-          <div class="heroCtas" style="margin-top:12px">
-            <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Investor%20Deck%20Request">Email for Deck →</a>
-            <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Partnership">Partnership</a>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+            <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Funding%20Inquiry">Funding Inquiry →</a>
+            <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access">Early Access</a>
           </div>
         </div>
       </article>
     </section>
 
     <footer>
-      <div>© <span id="y"></span> AlchemyScore™ • A SeeAVision™ Project</div>
-      <div class="pill">context • clarity • conscious consumption</div>
+      <div>© <span id="y"></span> AlchemyScore™ • by SeeAVision™</div>
+      <div class="subtitle">context • clarity • conscious consumption</div>
     </footer>
 
   </div>
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    const overlay = document.getElementById("overlay");
+    function openMenu(){
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden","false");
+    }
+    function closeMenu(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+    }
+    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeMenu(); });
+    window.openMenu = openMenu;
+    window.closeMenu = closeMenu;
   </script>
 </body>
-  </html>
+                                                    </html>
