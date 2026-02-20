@@ -1,660 +1,497 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AlchemyScore™ — Demo Phase</title>
-  <meta name="description" content="AlchemyScore™ is a nutrition label for music: Use, Avoid, and Strategy — so people can consume lyrics consciously." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AlchemyScore™ | SeeAVision</title>
+
+  <!-- Visual-only enhancements. All wording preserved exactly as provided. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Black Utopia palette (universal, not city) */
-      --bg0:#05050b;
-      --bg1:#070818;
-      --bg2:#0b0f1c;
+      --bg:#0b0b0c;
+      --panel:#121215;
+      --panel2:#0f0f13;
 
-      --gold:#f0c766;
-      --emerald:#45f3b0;
-      --indigo:#7b7cff;
-      --aqua:#4de6ff;
+      --text:#eaeaea;
+      --muted:#a1a1aa;
 
-      --glass:rgba(255,255,255,.06);
-      --glass2:rgba(255,255,255,.10);
-      --line:rgba(255,255,255,.12);
+      --brand:#ffd54a;
+      --accent:#00e0c7;
 
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
-      --muted2:rgba(255,255,255,.56);
+      --border:rgba(255,255,255,.10);
+      --border2:rgba(255,255,255,.14);
 
-      --radius:26px;
-      --shadow:0 22px 90px rgba(0,0,0,.62);
-      --shadow2:0 14px 44px rgba(0,0,0,.48);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
 
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --radius:18px;
+      --radius-sm:12px;
+
+      --pad:22px;
+      --max:980px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{margin:0;padding:0}
     body{
-      margin:0;
-      font-family:var(--sans);
       color:var(--text);
+      font-family:Inter,system-ui,Arial,sans-serif;
       background:
-        radial-gradient(1200px 680px at 18% 8%, rgba(240,199,102,.14), transparent 55%),
-        radial-gradient(1100px 620px at 86% 14%, rgba(69,243,176,.12), transparent 58%),
-        radial-gradient(900px 560px at 50% 92%, rgba(123,124,255,.10), transparent 55%),
-        radial-gradient(800px 520px at 72% 88%, rgba(77,230,255,.08), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 45%, var(--bg2));
-      overflow-x:hidden;
+        radial-gradient(1200px 600px at 20% -10%, rgba(255,213,74,.10), transparent 60%),
+        radial-gradient(1200px 700px at 120% 10%, rgba(0,224,199,.10), transparent 60%),
+        radial-gradient(800px 500px at 50% 115%, rgba(255,255,255,.04), transparent 60%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Soft “sacred grid” depth (not city) */
-    .depth{
-      position:fixed; inset:-30vh -20vw;
-      pointer-events:none;
-      opacity:.14;
-      background:
-        repeating-linear-gradient(90deg,
-          rgba(255,255,255,.08) 0px,
-          rgba(255,255,255,.08) 1px,
-          transparent 1px,
-          transparent 84px
-        );
-      transform: perspective(900px) rotateX(63deg) translateY(-160px);
-      filter: blur(.35px);
-      animation: drift 14s ease-in-out infinite alternate;
-    }
-    @keyframes drift{
-      0%{transform: perspective(900px) rotateX(63deg) translate3d(-12px,-160px,0)}
-      100%{transform: perspective(900px) rotateX(63deg) translate3d(12px,-140px,0)}
-    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{opacity:.92}
 
-    /* Warm orbs (less neon, more soul) */
-    .orb{position:fixed; border-radius:999px; filter: blur(26px); opacity:.26; pointer-events:none; mix-blend-mode: screen; animation: float 12s ease-in-out infinite;}
-    .orb.one{width:420px;height:420px;left:-170px;top:70px;background:rgba(240,199,102,.92)}
-    .orb.two{width:460px;height:460px;right:-210px;top:120px;background:rgba(69,243,176,.86);animation-duration:13s}
-    .orb.three{width:360px;height:360px;left:38%;bottom:-190px;background:rgba(123,124,255,.72);animation-duration:14s}
-    .orb.four{width:280px;height:280px;right:10%;bottom:-140px;background:rgba(77,230,255,.62);animation-duration:15s}
-    @keyframes float{0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-16px,0)}}
-
-    .wrap{max-width:1120px;margin:0 auto;padding:18px 16px 70px; position:relative; z-index:2}
-    a{color:inherit}
-
-    /* Top bar (mobile clean) */
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-      padding:12px 12px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border-radius:999px;
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(16px);
-      position:sticky; top:12px; z-index:10;
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:24px 18px 70px;
     }
-    .brand{display:flex; align-items:center; gap:10px; min-width:0}
-    .logo{
-      width:38px;height:38px;border-radius:14px;
-      background:
-        radial-gradient(circle at 28% 30%, rgba(240,199,102,.95), transparent 48%),
-        radial-gradient(circle at 78% 32%, rgba(69,243,176,.86), transparent 52%),
-        radial-gradient(circle at 40% 82%, rgba(123,124,255,.68), transparent 52%),
-        rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow: 0 0 26px rgba(240,199,102,.10), 0 0 26px rgba(69,243,176,.08);
-    }
-    .brand h1{
-      font-size:14px; margin:0; letter-spacing:.16em; text-transform:uppercase;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .subtitle{
-      font-family:var(--mono);
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      display:inline-block;
-      margin-top:3px;
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      text-decoration:none;
-      font-weight:800;
-      font-size:13px;
-      transition: transform .15s ease, background .2s ease, border-color .2s ease;
-      cursor:pointer;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.26)}
-    .btn.primary{
-      border-color: rgba(240,199,102,.40);
-      background: linear-gradient(90deg, rgba(240,199,102,.16), rgba(69,243,176,.12));
-      box-shadow: 0 0 28px rgba(240,199,102,.10);
-    }
-
-    /* Desktop nav links */
-    .navlinks{display:flex; gap:10px; align-items:center}
-    .navlinks a{white-space:nowrap}
-    .menuBtn{display:none}
-
-    @media (max-width: 780px){
-      .navlinks{display:none}
-      .menuBtn{display:inline-flex}
-    }
-
-    /* Menu overlay */
-    .overlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.58);
-      backdrop-filter: blur(10px);
-      display:none;
-      z-index:50;
-      padding:18px;
-    }
-    .overlay.open{display:block}
-    .sheet{
-      max-width:520px;
-      margin:12px auto 0;
-      border:1px solid rgba(255,255,255,.16);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border-radius:24px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .sheetHeader{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:14px 14px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-    .sheetHeader strong{letter-spacing:.12em; text-transform:uppercase; font-size:12px; color:var(--muted)}
-    .sheetBody{padding:12px}
-    .sheetBody a{
-      display:flex;
-      padding:12px 12px;
-      border-radius:16px;
-      text-decoration:none;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      margin-bottom:10px;
-      font-weight:800;
-    }
-
-    /* Panels */
-    .panel{
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border-radius:var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      overflow:hidden;
-      position:relative;
-    }
-    .panel::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(820px 260px at 18% 0%, rgba(240,199,102,.18), transparent 58%),
-        radial-gradient(760px 260px at 90% 10%, rgba(69,243,176,.14), transparent 60%),
-        radial-gradient(700px 260px at 70% 110%, rgba(123,124,255,.10), transparent 60%);
-      opacity:.95; pointer-events:none;
-    }
-    .panelInner{position:relative; padding:26px}
 
     /* HERO */
-    .hero{padding:26px 6px 10px}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-      align-items:stretch;
+    .hero{
+      background:
+        radial-gradient(800px 220px at 18% 0%, rgba(255,213,74,.10), transparent 60%),
+        radial-gradient(800px 240px at 85% 0%, rgba(0,224,199,.10), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,0));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:26px 24px;
+      box-shadow:var(--shadow2);
+      position:relative;
+      overflow:hidden;
     }
-    @media (max-width:900px){ .heroGrid{grid-template-columns:1fr} }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(120deg, rgba(255,213,74,.10), rgba(0,224,199,.08), transparent 60%);
+      opacity:.35;
+      pointer-events:none;
+      filter: blur(14px);
+    }
+    .hero > *{position:relative}
 
-    .kicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:var(--muted);
-      display:flex; align-items:center; gap:10px;
-    }
-    .sig{
-      width:10px;height:10px;border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, var(--gold), rgba(255,255,255,.2));
-      box-shadow: 0 0 18px rgba(240,199,102,.28);
-    }
-    .headline{
-      margin:12px 0 10px;
-      font-size:52px;
-      line-height:1.02;
+    h1{
+      font-size:clamp(28px,4vw,46px);
+      line-height:1.08;
+      margin:18px 0 14px;
+      color:#fff;
       letter-spacing:-.02em;
     }
-    @media (max-width:420px){ .headline{font-size:38px} }
-
     .sub{
-      margin:0;
       color:var(--muted);
-      font-size:16px;
-      line-height:1.65;
-      max-width:70ch;
+      margin-top:-6px;
+      line-height:1.7;
     }
 
-    .heroCtas{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+    /* SECTION CARDS */
+    section{margin:26px 0}
 
-    .banner{
+    section .card{
+      background:
+        radial-gradient(900px 260px at 10% -10%, rgba(255,213,74,.06), transparent 55%),
+        radial-gradient(900px 260px at 95% 0%, rgba(0,224,199,.05), transparent 60%),
+        var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:var(--pad);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    section .card:after{
+      content:"";
+      position:absolute; inset:0;
+      border-radius:var(--radius);
+      pointer-events:none;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    section h2, section h3{color:#fff;margin:0 0 10px}
+    section h2{
+      font-size:clamp(20px,2.5vw,26px);
+      letter-spacing:-.01em;
+    }
+    section h3{
+      font-size:clamp(16px,2vw,20px);
+      color:#e9e9ee;
       margin-top:14px;
-      border:1px solid rgba(255,255,255,.14);
+    }
+
+    p{
+      color:#e6e6ea;
+      line-height:1.75;
+      margin:10px 0;
+    }
+
+    ul{
+      padding-left:20px;
+      margin:10px 0 0;
+      color:#e6e6ea;
+      line-height:1.7;
+    }
+    li{margin:6px 0}
+
+    blockquote{
+      margin:14px 0;
+      padding:14px 16px;
+      border-left:4px solid var(--brand);
+      background:var(--panel2);
+      border-radius:var(--radius-sm);
+      color:#fafafa;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+
+    /* DEMO LINK / BUTTONS */
+    .demo-link, .btn{
+      font-weight:700;
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:12px;
+      border:1px solid var(--border2);
       background:rgba(255,255,255,.04);
-      border-radius:18px;
-      padding:12px 12px;
-      color:var(--muted);
-      font-size:13px;
+      color:#fff;
+      box-shadow:var(--shadow2);
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .demo-link{margin-top:10px}
+    .demo-link:hover, .btn:hover{
+      transform: translateY(-1px);
+      background:rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    /* TABLE */
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:14px;
+      overflow:hidden;
+      margin-top:12px;
+    }
+    thead th{
+      background:rgba(255,255,255,.04);
+      color:#d6d6df;
+      text-align:left;
+      font-weight:700;
+    }
+    th,td{
+      padding:12px;
+      border-top:1px solid rgba(255,255,255,.08);
+      vertical-align:top;
       line-height:1.5;
     }
-    .banner b{color:rgba(255,255,255,.88)}
+    tbody tr:hover td{background:rgba(255,255,255,.02)}
 
-    /* Right panel list */
-    .stack{display:grid; gap:10px}
-    .item{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:12px 12px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-    }
-    .icon{
-      width:34px;height:34px;border-radius:14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.05);
-      font-size:16px;
-    }
-    .item h4{margin:0; font-size:14px}
-    .item p{margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.45}
-
-    /* Section titles */
-    .sectionTitle{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin:22px 6px 10px;
-    }
-    .sectionTitle h2{
-      margin:0; font-size:16px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.86);
-    }
-    .sectionTitle .line{
-      height:1px; flex:1;
-      background:linear-gradient(90deg, rgba(255,255,255,.14), transparent);
+    /* Make table usable on small screens */
+    .table-wrap{
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius:14px;
     }
 
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-      padding:0 6px;
-    }
-    @media (max-width:900px){ .cards{grid-template-columns:1fr} }
-    .card{
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius:var(--radius);
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(16px);
-      overflow:hidden;
-      position:relative;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-1px;
+    /* DEMO GALLERY (keep your structure, just make it nicer) */
+    .demo-gallery{
+      margin-top: 22px;
+      text-align: center;
       background:
-        radial-gradient(560px 170px at 18% -10%, rgba(240,199,102,.12), transparent 58%),
-        radial-gradient(560px 180px at 100% 0%, rgba(69,243,176,.10), transparent 60%),
-        radial-gradient(520px 180px at 60% 120%, rgba(123,124,255,.08), transparent 60%);
-      opacity:.95; pointer-events:none;
+        radial-gradient(900px 240px at 50% 0%, rgba(0,224,199,.06), transparent 60%),
+        rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow2);
     }
-    .cardInner{position:relative; padding:18px}
-    .tagRow{display:flex; justify-content:space-between; align-items:center; gap:10px}
-    .tag{
-      font-family:var(--mono);
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--muted);
-      white-space:nowrap;
+    .demo-gallery h3{
+      margin: 0 0 10px;
+      color: #fff;
     }
-    .card h3{margin:12px 0 8px; font-size:18px}
-    .card p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
-    .bullets{margin:12px 0 0; padding-left:18px; color:var(--muted2); font-size:13px}
-    .bullets li{margin:6px 0}
+    .demo-gallery p{
+      margin: 0 0 16px;
+      color: #cfcfd6;
+    }
+    .gallery{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      padding:10px;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .gallery img{
+      height: 360px;
+      width:auto;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.55);
+      scroll-snap-align: start;
+      border: 1px solid rgba(255,255,255,.10);
+      background:#0c0c10;
+    }
+    @media (max-width:520px){
+      .gallery img{height: 300px}
+    }
 
-    /* Footer */
-    footer{
-      margin-top:26px;
-      padding:20px 6px 0;
-      color:var(--muted2);
-      font-size:12px;
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    /* FOOTER + FINAL EMAIL LINE */
+    .final-email{
+      margin-top: 22px;
+      padding: 14px 16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      text-align:center;
+      box-shadow: var(--shadow2);
+      color: var(--muted);
     }
+    footer{
+      margin: 26px 0 10px;
+      color:#9a9aa3;
+      text-align:center;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:16px;
+    }
+
+    .brand{color:var(--brand)}
   </style>
 </head>
 
 <body>
-  <div class="depth"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-  <div class="orb four"></div>
-
-  <!-- Mobile menu overlay -->
-  <div id="overlay" class="overlay" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
-      <div class="sheetHeader">
-        <strong>Menu</strong>
-        <button class="btn" onclick="closeMenu()">Close</button>
-      </div>
-      <div class="sheetBody">
-        <a href="#how" onclick="closeMenu()">How it works</a>
-        <a href="#features" onclick="closeMenu()">Features</a>
-        <a href="#needs" onclick="closeMenu()">What we need</a>
-        <a href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer" onclick="closeMenu()">Try the demo →</a>
-        <a href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access" onclick="closeMenu()">Early access</a>
-      </div>
-    </div>
-  </div>
-
   <div class="wrap">
 
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div style="min-width:0">
-          <h1>AlchemyScore™</h1>
-          <div class="subtitle">Demo Phase • The Nutrition Label for Music</div>
-        </div>
-      </div>
+    <!-- Your original SeeAVision intro section (kept exactly as-is text-wise) -->
+    <section>
+      <div class="card">
+        <h1>🌊 Welcome to SeeAVision™</h1>
+        <p><strong>SeeAVision™</strong> is cultural technology dedicated to creating tools that help people learn, create, and consume culture consciously. Our mission is to build platforms that protect the mind, uplift creativity, and evolve how society engages with media and education.</p>
 
-      <!-- desktop links -->
-      <div class="navlinks">
-        <a class="btn" href="#how">How it works</a>
-        <a class="btn" href="#features">Features</a>
-        <a class="btn" href="#needs">What we need</a>
-        <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
-      </div>
+        <p>Our projects span music, education, and creative empowerment:</p>
+        <ul>
+          <li>🎶 <strong>AlchemyScore™</strong> — A “nutrition label” for music, guiding listeners on how to digest lyrics safely.</li>
+          <li>🎮 <strong>Team Builder Game</strong> — An educational match game for youth and classrooms that teaches teamwork, entrepreneurship, and building profitable companies by aligning the right roles and archetypes.</li>
+          <li>🎤 <strong>FlowState</strong> — An app that transforms raw freestyles into cohesive songs by analyzing flows, finding patterns, and generating hooks.</li>
+        </ul>
 
-      <!-- mobile menu -->
-      <button class="btn menuBtn" onclick="openMenu()">Menu</button>
-    </div>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroGrid">
-
-        <div class="panel">
-          <div class="panelInner">
-            <div class="kicker"><span class="sig"></span>AlchemyScore™ by SeeAVision</div>
-            <h2 class="headline">Music needs a nutrition label.</h2>
-            <p class="sub">
-              <b>AlchemyScore™</b> helps people consume lyrics consciously by translating a song into clear guidance:
-              <b>Use</b> (what to digest), <b>Avoid</b> (what to discard), and <b>Strategy</b> (how to apply it for growth).
-              <br/><br/>
-              This is a <b>working demo</b>. Production funding upgrades speed, security, and integrations.
-            </p>
-
-            <div class="heroCtas">
-              <a class="btn primary" href="https://alchemyscore.onrender.com/" target="_blank" rel="noreferrer">Try the Demo →</a>
-              <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access">Get Early Access</a>
-              <a class="btn" href="#needs">What we need</a>
-            </div>
-
-            <div class="banner">
-              <b>Honest note:</b> The demo may load slowly (hosted on Render). The goal is a faster standalone build with secure keys, caching, and stable integrations.
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panelInner">
-            <div class="kicker"><span class="sig"></span>Output you actually understand</div>
-
-            <div class="stack" style="margin-top:12px">
-              <div class="item">
-                <div class="icon">✅</div>
-                <div>
-                  <h4>Use</h4>
-                  <p>What to take in positively from the message.</p>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="icon">⚠️</div>
-                <div>
-                  <h4>Avoid</h4>
-                  <p>What to discard if it’s harmful, disempowering, or misaligned.</p>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="icon">🧭</div>
-                <div>
-                  <h4>Strategy</h4>
-                  <p>How to apply the message in real life (listener or creator).</p>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="icon">🧠</div>
-                <div>
-                  <h4>RECODE Mode</h4>
-                  <p>Rewrites harmful logic into upgraded logic while respecting cadence (optional mode).</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
+        <p><strong>AlchemyScore™</strong> is just the beginning. SeeAVision™ is building a full ecosystem of cultural technology to support <em>education, creativity, and conscious media consumption</em> for the next generation.</p>
       </div>
     </section>
 
-    <!-- HOW -->
-    <div class="sectionTitle" id="how">
-      <h2>How it works</h2><div class="line"></div>
+    <div class="hero">
+      <h1>🔑 AlchemyScore™: The Nutrition Label and directions for how to safely consume Music</h1>
+      <p class="sub"></p>
     </div>
 
-    <section class="cards">
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Step 1</span>
-            <span class="tag">Input</span>
-          </div>
-          <h3>Analyze lyrics or an artist</h3>
-          <p>Paste lyrics, enter a song, or run an artist scan—then the system extracts themes, intent, and outcomes.</p>
-          <ul class="bullets">
-            <li>Lyric upload for unreleased bars</li>
-            <li>Song/artist pathways</li>
-            <li>Compare mode supported</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Step 2</span>
-            <span class="tag">Label</span>
-          </div>
-          <h3>Get the AlchemyScore™ breakdown</h3>
-          <p>Music becomes visible like nutrition facts—so impact is clear before it shapes behavior.</p>
-          <ul class="bullets">
-            <li>9-category score breakdown</li>
-            <li>Blueprint + substance clarity</li>
-            <li>Readable outputs (no fluff)</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Step 3</span>
-            <span class="tag">Apply</span>
-          </div>
-          <h3>Use / Avoid / Strategy</h3>
-          <p>You get practical guidance—what to keep, what to discard, and how to upgrade the message.</p>
-          <ul class="bullets">
-            <li>Listener protection layer</li>
-            <li>Artist context layer</li>
-            <li>Optional RECODE upgrades</li>
-          </ul>
-        </div>
-      </article>
+    <section>
+      <div class="card">
+        <h2>🎯 1. Core Purpose</h2>
+        <p><strong>AlchemyScore™</strong> breaks down music like a nutrition label. It shows users how to digest a song:</p>
+        <ul>
+          <li>✅ What to take in</li>
+          <li>❌ What to discard</li>
+          <li>🧭 How to apply the message</li>
+        </ul>
+        <p>It’s the instruction manual for lyrics—helping people understand what they’re feeding their mind, behavior, and belief system every time they press play.</p>
+      </div>
     </section>
 
-    <!-- FEATURES -->
-    <div class="sectionTitle" id="features">
-      <h2>Core features</h2><div class="line"></div>
+    <section>
+      <div class="card">
+        <h2>🧠 2. Cultural & Psychological Impact</h2>
+        <p>Music is one of the most influential forces on the planet—yet it’s consumed with no guidance, filters, or accountability. Right now, people absorb lyrics like fast food:</p>
+        <blockquote>No labels. No warnings. No awareness.</blockquote>
+        <p><strong>AlchemyScore™</strong> is the first system that shows listeners the real emotional, mental, and behavioral impact of what they’re consuming—before it shapes their worldview.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>🛡️ 3. Protection Layer</h2>
+        <h3>For Listeners</h3>
+        <ul>
+          <li>✅ Filters out toxic lyrical messaging</li>
+          <li>✅ Clarifies the energy and intent of each song</li>
+          <li>✅ Prevents blind consumption and subconscious imprinting</li>
+        </ul>
+
+        <h3>For Artists</h3>
+        <ul>
+          <li>🎤 Protects freedom of expression</li>
+          <li>🎤 Helps fans interpret lyrics in context</li>
+          <li>🎤 Shields artists from cultural blame for misunderstood influence</li>
+        </ul>
+
+        <h3>For the Industry</h3>
+        <ul>
+          <li>🏢 Enables better A&R and label curation</li>
+          <li>🏢 Adds context to controversial releases without censorship</li>
+          <li>🏢 Opens the door to use in education, mental health, parenting, and youth development</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>🔬 4. The Alchemy Engine</h2>
+        <p>Every artist carries both light and shadow in their catalog. AlchemyScore doesn’t censor—it translates:</p>
+        <ul>
+          <li>✅ <strong>Use</strong> — Uplifting, empowering, healthy codes</li>
+          <li>⚠️ <strong>Avoid</strong> — Harmful, misaligned, or disempowering patterns</li>
+          <li>🧭 <strong>Strategy</strong> — How to apply or transform the message for positive action</li>
+        </ul>
+        <p>This process alchemizes raw musical emotion into elevated, conscious insight.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>📊 5. Unique Features</h2>
+        <ul>
+          <li>✔️ 9-Category Scoring System (Lyricism, Flow, Charisma, Substance, Blueprint, etc.)</li>
+          <li>✔️ Lyric Upload Mode (for unreleased or personal bars)</li>
+          <li>✔️ Compare Mode (artist vs. artist or song vs. song)</li>
+          <li>✔️ Tier System: GOAT → Greatest Ever → Legacy Tier → Apprentice</li>
+          <li>✔️ Indie Artist Submission Portal (launching post-funding)</li>
+          <li>✔️ Real-Time Analysis via AI (OpenAI + Genius + NLP integrations)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>🧪 6. Traction + Prototype</h2>
+        <p>The <strong>AlchemyScore™</strong> prototype is already live and functional on Render. We’ve already built:</p>
+        <ul>
+          <li>✅ Real scoring breakdowns</li>
+          <li>✅ Chart visualizations</li>
+          <li>✅ Working analysis engine</li>
+          <li>✅ Core user interface</li>
+        </ul>
+        <p>This is not a concept—it’s an operational prototype, ready to scale with the right backing.</p>
+        <a class="demo-link" href="https://alchemyscore.onrender.com/" target="_blank">🔗 View Live Demo</a>
+      </div>
+    </section>
+
+    <!-- Your gallery (same images/labels) -->
+    <div class="demo-gallery">
+      <h3>🖼️ Live Demo Preview</h3>
+      <p>Here’s a look at AlchemyScore™ and Recode Mode in action:</p>
+      <div class="gallery">
+        <img src="images/demo2.jpg" alt="Recode Mode Example 2">
+        <img src="images/demo3.jpg" alt="Recode Mode Example 3">
+        <img src="images/demo4.jpg" alt="AlchemyScore Analysis 1">
+        <img src="images/demo5.jpg" alt="AlchemyScore Analysis 2">
+        <img src="images/demo7.jpg" alt="AlchemyScore Analysis 3">
+      </div>
     </div>
 
-    <section class="cards">
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Scoring</span>
-            <span class="tag">Clarity</span>
-          </div>
-          <h3>9-category system</h3>
-          <p>Breaks down the message, delivery, and blueprint outcomes—built to be understandable, not trendy.</p>
-          <ul class="bullets">
-            <li>Vertical score read (easy)</li>
-            <li>Bar-chart ready visuals</li>
-            <li>Legacy + trajectory layer</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Compare</span>
-            <span class="tag">Side-by-side</span>
-          </div>
-          <h3>Compare mode</h3>
-          <p>Compare two artists or songs and see the real difference in outcomes and code trajectory.</p>
-          <ul class="bullets">
-            <li>Category-by-category comparison</li>
-            <li>One clear chart, two bars</li>
-            <li>Use/Avoid contrast</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">RECODE</span>
-            <span class="tag">Upgrade</span>
-          </div>
-          <h3>RECODE mode</h3>
-          <p>Upgrades harmful logic into constructive logic while preserving cadence (when enabled).</p>
-          <ul class="bullets">
-            <li>Remix or serious upgrade</li>
-            <li>Cadence-respecting rewrites</li>
-            <li>Future: saved recodes</li>
-          </ul>
-        </div>
-      </article>
+    <section>
+      <div class="card">
+        <h2>🧠 NEW:  LOGIC RECODE Mode</h2>
+        <p>In addition to AlchemyScore Mode, users can toggle to <strong>RECODE Mode</strong>—A lyrical recode engine built to upgrade an recode harmful or unwise Logic™.</p>
+        <p>This mode rewrites lyrics or phrases or whole songs in a simular rhythm or cadence just with upgraded logic. by:</p>
+        <ul>
+          <li>🧠 Exposing subconscious codes in lyrics</li>
+          <li>🧭 Suggesting real-life upgrades to harmful mindsets</li>
+          <li>🎯 Offering personal and collective rewiring strategies</li>
+        </ul>
+        <p>RECODE Mode is A fun remixer or a serious upgrader for music lyrics.</p>
+      </div>
     </section>
 
-    <!-- NEEDS -->
-    <div class="sectionTitle" id="needs">
-      <h2>What we need to finish</h2><div class="line"></div>
+    <section>
+      <div class="card">
+        <h2>🚀 7. Positioning Statement</h2>
+        <blockquote><strong>AlchemyScore™</strong> isn’t just an app—it’s the missing link in how we experience and process music. It makes music smarter, healthier, and more constructive for the listener’s mind, the artist’s legacy, and the culture’s future.</blockquote>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>📣 8. The Big Claim</h2>
+        <blockquote>
+          If every album or single came with an AlchemyScore™, it would do for music what nutrition facts and directions on how to cook did for food.
+          <br><br>
+          Not censorship—context. <br>
+          Not limitation—liberation. <br>
+          It protects the artist, the listener, and the industry—without silencing truth.
+        </blockquote>
+        <p>We're not building this on bare minimums. This is a cultural technology platform, not a side app.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>💰 9. FUNDING ROUND: $500,000 Seed Raise</h2>
+        <p>This raise supports full-scale development, mobile optimization, indie artist integration, and a strong cultural rollout.</p>
+
+        <!-- Visual-only: table wrapper for mobile scrolling -->
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Category</th><th>Budget</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Product Architecture & Development</td><td>$150,000</td><td>Full-stack build, scoring logic, indie portal</td></tr>
+              <tr><td>Creative & Operational Leadership</td><td>$125,000</td><td>Strategy, branding, product flow</td></tr>
+              <tr><td>Marketing & Launch Campaign</td><td>$75,000</td><td>Reels, influencer push, platform trailers</td></tr>
+              <tr><td>UX/UI + Visual Design</td><td>$35,000</td><td>App store–ready interface</td></tr>
+              <tr><td>AI/API Infrastructure</td><td>$25,000</td><td>OpenAI, Genius, NLP scoring</td></tr>
+              <tr><td>Legal + IP Protection</td><td>$15,000</td><td>Trademark, artist terms, privacy</td></tr>
+              <tr><td>Operations & Team Support</td><td>$20,000</td><td>Coordination, admin</td></tr>
+              <tr><td>Indie Submission System</td><td>$30,000</td><td>Artist dashboard + rating interface</td></tr>
+              <tr><td>Distribution & Travel</td><td>$20,000</td><td>Label convos, live pitches</td></tr>
+              <tr><td>Emergency + Flex Buffer</td><td>$20,000</td><td>For growth pivots</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>Total Ask: $500,000</strong> — Equity negotiable based on investor contribution and alignment.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>🧲 Why Invest Now</h2>
+        <ul>
+          <li>✅ Prototype is live</li>
+          <li>✅ Market is primed</li>
+          <li>✅ AI + Culture convergence is now</li>
+        </ul>
+        <p>You’re not investing in a trend. You’re investing in the truth layer of music that’s been missing for 40+ years.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>🎯 Summary</h2>
+        <blockquote>
+          AlchemyScore is the platform that helps people digest music safely and intelligently.
+          It helps fans process, artists protect, and the culture evolve.
+          We’re raising $500K to complete the full build, activate indie submissions, and launch at scale.
+        </blockquote>
+        <p>“We made apps to rate food, track our steps, manage our stocks… But not the thing we put in our heads every single day thats the influential soundtrack of our lives? <strong>AlchemyScore™ fixes that.</strong>”</p>
+      </div>
+    </section>
+
+    <div class="final-email">
+      Questions or partnership inquiries? Email us at <a href="mailto:contact@seeavision.net">contact@seeavision.net</a>
     </div>
-
-    <section class="cards">
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Speed</span>
-            <span class="tag">Reliability</span>
-          </div>
-          <h3>Standalone production hosting</h3>
-          <p>Faster load times, caching, background jobs, and stable uptime (not slow demo hosting).</p>
-          <ul class="bullets">
-            <li>Better servers + caching</li>
-            <li>Queue/background processing</li>
-            <li>Monitoring + analytics</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Security</span>
-            <span class="tag">Keys</span>
-          </div>
-          <h3>Secure API + integrations</h3>
-          <p>Proper secret management and paid keys for lyrics/music services and analysis infrastructure.</p>
-          <ul class="bullets">
-            <li>Secure key storage</li>
-            <li>Rate limiting</li>
-            <li>Integrations (lyrics + music)</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="cardInner">
-          <div class="tagRow">
-            <span class="tag">Goal</span>
-            <span class="tag">100 users</span>
-          </div>
-          <h3>First 100 paying users</h3>
-          <p>Funding helps ship the production version so we can validate paid demand with real users.</p>
-          <ul class="bullets">
-            <li>Clean UX + onboarding</li>
-            <li>Saved reports</li>
-            <li>Share + referral loop</li>
-          </ul>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-            <a class="btn primary" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Funding%20Inquiry">Funding Inquiry →</a>
-            <a class="btn" href="mailto:contact@seeavision.net?subject=AlchemyScore%20Early%20Access">Early Access</a>
-          </div>
-        </div>
-      </article>
-    </section>
 
     <footer>
-      <div>© <span id="y"></span> AlchemyScore™ • by SeeAVision™</div>
-      <div class="subtitle">context • clarity • conscious consumption</div>
+      <p>© 2026 SeeAVision™</p>
     </footer>
 
   </div>
-
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-
-    const overlay = document.getElementById("overlay");
-    function openMenu(){
-      overlay.classList.add("open");
-      overlay.setAttribute("aria-hidden","false");
-    }
-    function closeMenu(){
-      overlay.classList.remove("open");
-      overlay.setAttribute("aria-hidden","true");
-    }
-    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeMenu(); });
-    window.openMenu = openMenu;
-    window.closeMenu = closeMenu;
-  </script>
 </body>
-                                                    </html>
+</html>
